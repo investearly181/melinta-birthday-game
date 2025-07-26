@@ -1,34 +1,153 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spin to Win - Melinta's Birthday 🎉</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>🎉 Happy Birthday Melinta 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to top right, #fceabb, #f8b500);
+      color: #333;
+      text-align: center;
+    }
+    .intro-screen, .game-screen {
+      padding: 30px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h1 {
+      font-size: 3rem;
+      color: #c0392b;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+    .slideshow img {
+      width: 300px;
+      height: 200px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      margin: 10px auto;
+      transition: opacity 1s;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #resultText {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: #8e44ad;
+      font-weight: bold;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="audio/happy_birthday.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-  <div class="intro">
-    <h1>💌 Happy Birthday Melinta!</h1>
-    <p>I said don’t expect anything less from your brother 💖</p>
-    <p>Play the game and win your surprise 🎁</p>
-    <img src="images/melinta_and_brother.jpg" alt="Melinta and Brother" />
-    <button id="startBtn">Start the Game 🎂</button>
-  </div>
-
-  <div class="game-container hidden">
-    <div class="wheel-container">
-      <canvas id="wheel" width="500" height="500"></canvas>
-      <button id="spinBtn">🎉 Spin the Wheel 🎉</button>
+  <div class="intro-screen">
+    <audio id="bgMusic" autoplay loop>
+      <source src="https://www.bensound.com/bensound-music/bensound-birthday.mp3" type="audio/mpeg" />
+    </audio>
+    <h1>🎂 Happy Birthday, Melinta! 🎂</h1>
+    <p>💌 "I said don't expect anything less from your brother... Play the game and win!"</p>
+    <div class="slideshow">
+      <img src="https://i.imgur.com/tBirthday1.jpg" class="slide" />
+      <img src="https://i.imgur.com/tBirthday2.jpg" class="slide" style="display: none" />
+      <img src="https://i.imgur.com/tBirthday3.jpg" class="slide" style="display: none" />
     </div>
-    <div id="result" class="result-message"></div>
+    <button id="startBtn">Start Game 🎮</button>
   </div>
 
-  <script src="script.js"></script>
+  <div class="game-screen" style="display: none">
+    <h2>🎊 Spin the Wheel to Win ₹3000! 🎊</h2>
+    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+    <button id="spinBtn">🎡 Spin</button>
+    <p id="resultText"></p>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let index = 0;
+    setInterval(() => {
+      slides[index].style.display = 'none';
+      index = (index + 1) % slides.length;
+      slides[index].style.display = 'block';
+    }, 2000);
+
+    const startBtn = document.getElementById('startBtn');
+    const intro = document.querySelector('.intro-screen');
+    const game = document.querySelector('.game-screen');
+    startBtn.onclick = () => {
+      intro.style.display = 'none';
+      game.style.display = 'block';
+    };
+
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultText = document.getElementById('resultText');
+    const segments = ['₹500', '₹1000', '₹3000', 'Better Luck 😅', '₹100', '₹2000'];
+
+    function drawWheel(angle) {
+      const radius = canvas.width / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < segments.length; i++) {
+        const start = (i / segments.length) * 2 * Math.PI;
+        const end = ((i + 1) / segments.length) * 2 * Math.PI;
+        ctx.beginPath();
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius, start + angle, end + angle);
+        ctx.fillStyle = `hsl(${i * 60}, 70%, 60%)`;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(start + angle + Math.PI / segments.length);
+        ctx.fillStyle = 'black';
+        ctx.font = '16px Arial';
+        ctx.fillText(segments[i], radius / 2, 0);
+        ctx.restore();
+      }
+    }
+
+    let spinning = false;
+    let currentAngle = 0;
+    drawWheel(currentAngle);
+
+    spinBtn.onclick = () => {
+      if (spinning) return;
+      spinning = true;
+      let velocity = Math.random() * 0.3 + 0.25;
+      const friction = 0.995;
+      const stopAt = Math.random() * 2 * Math.PI;
+
+      const spin = () => {
+        currentAngle += velocity;
+        velocity *= friction;
+        drawWheel(currentAngle);
+
+        if (velocity < 0.002) {
+          spinning = false;
+          const finalIndex = Math.floor(((2 * Math.PI - (currentAngle % (2 * Math.PI))) / (2 * Math.PI)) * segments.length) % segments.length;
+          const result = segments[finalIndex];
+          resultText.textContent = `🎁 You won: ${result}`;
+        } else {
+          requestAnimationFrame(spin);
+        }
+      };
+      spin();
+    };
+  </script>
 </body>
 </html>
