@@ -1,26 +1,21 @@
+let angle = 0;
+
 function startGame() {
-  document.getElementById('welcome-screen').style.display = 'none';
-  document.getElementById('game-screen').style.display = 'block';
-  document.getElementById("birthday-audio").play();
+  document.getElementById("intro").classList.add("hidden");
+  document.getElementById("game").classList.remove("hidden");
+  document.getElementById("song").play();
 }
 
-document.getElementById("spinBtn").addEventListener("click", function () {
+function spin() {
   const wheel = document.getElementById("wheel");
-  const result = document.getElementById("result");
+  const resultAngle = 0 + 360 * 5; // Fixed to land on ₹3000 Cash
 
-  // Force result to ₹3,000 Cash (first sector, 0-60 degrees)
-  let degrees = 360 * 5 + 30; // lands in first slice
-  wheel.style.transition = "transform 5s ease-out";
-  wheel.style.transform = `rotate(${degrees}deg)`;
+  angle += resultAngle;
 
-  this.disabled = true;
+  wheel.style.transform = `rotate(${angle}deg)`;
 
   setTimeout(() => {
-    result.innerHTML = "You won ₹3,000 Cash! 🎉";
-    showCelebration();
-  }, 5200);
-});
-
-function showCelebration() {
-  document.getElementById("celebration").style.display = "block";
+    document.getElementById("game").classList.add("hidden");
+    document.getElementById("celebration").classList.remove("hidden");
+  }, 4000);
 }
