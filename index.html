@@ -7,26 +7,27 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="welcome-screen">
-    <h1>Happy Birthday Meli Beta 🎂</h1>
-    <img src="images/melinta.png" alt="Melinta & You" />
-    <p>You don’t expect anything less from me 😎</p>
-    <button onclick="startGame()">Enter the Game</button>
+  <div class="intro" id="intro">
+    <h1>🎉 Happy Birthday Meli Beta 🎉</h1>
+    <img src="images/you-and-meli.png" alt="You and Meli" class="photo"/>
+    <p>“i said You don’t expect anything less then this from me”</p>
+    <button onclick="startGame()">Enter the Game of Spin 🎮</button>
   </div>
 
-  <div id="game-screen" style="display: none;">
-    <audio id="birthday-audio" src="audio/birthday.mp3" autoplay loop></audio>
-
+  <div class="game hidden" id="game">
+    <audio id="song" autoplay>
+      <source src="audio/birthday-song.mp3" type="audio/mp3" />
+    </audio>
     <div class="wheel-container">
-      <div id="wheel"></div>
-      <button id="spinBtn">🎯 Spin the Wheel</button>
+      <img src="images/wheel.png" class="wheel" id="wheel" />
+      <button onclick="spin()">🎯 Spin the Wheel</button>
     </div>
-    <div id="result"></div>
-    <div id="celebration" style="display: none;">
-      <img src="https://i.imgur.com/oBbNcHU.png" alt="Cake" class="cake" />
-      <div class="balloons"></div>
-      <h2>🎉 You won ₹3,000 Cash! Happy Birthday! 🎉</h2>
-    </div>
+  </div>
+
+  <div class="celebration hidden" id="celebration">
+    <h2>🎂 Congratulations Meli! You won ₹3000 Cash!</h2>
+    <img src="images/cake.png" class="cake" />
+    <div class="balloons"></div>
   </div>
 
   <script src="script.js"></script>
