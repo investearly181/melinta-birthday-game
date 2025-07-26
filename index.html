@@ -3,20 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎂 Happy Birthday Melinta 🎉</title>
+  <title>Happy Birthday Meli 🎉</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="audio/happy-birthday.mp3" type="audio/mp3" />
-  </audio>
+  <div id="welcome-screen">
+    <h1>Happy Birthday Meli Beta 🎂</h1>
+    <img src="images/melinta.png" alt="Melinta & You" />
+    <p>You don’t expect anything less from me 😎</p>
+    <button onclick="startGame()">Enter the Game</button>
+  </div>
 
-  <h1>🎁 Spin the Birthday Wheel for Melinta 🎈</h1>
-  <canvas id="wheel" width="500" height="500"></canvas>
-  <button id="spinBtn">🎯 SPIN</button>
-  <h2 id="result"></h2>
+  <div id="game-screen" style="display: none;">
+    <audio id="birthday-audio" src="audio/birthday.mp3" autoplay loop></audio>
 
-  <div id="confetti"></div>
+    <div class="wheel-container">
+      <div id="wheel"></div>
+      <button id="spinBtn">🎯 Spin the Wheel</button>
+    </div>
+    <div id="result"></div>
+    <div id="celebration" style="display: none;">
+      <img src="https://i.imgur.com/oBbNcHU.png" alt="Cake" class="cake" />
+      <div class="balloons"></div>
+      <h2>🎉 You won ₹3,000 Cash! Happy Birthday! 🎉</h2>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
