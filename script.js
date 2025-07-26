@@ -1,57 +1,77 @@
-// Image Slideshow
-const slides = document.querySelectorAll('.slide');
-let current = 0;
-setInterval(() => {
-  slides[current].style.display = 'none';
-  current = (current + 1) % slides.length;
-  slides[current].style.display = 'block';
-}, 3000);
+// script.js
+let segments = [
+  "🎉 You are Loved!",
+  "🌟 You’re Irreplaceable!",
+  "🍰 Cake is Waiting!",
+  "💖 Sister for Life!",
+  "🎁 Surprise Coming!",
+  "🦄 Magical You!",
+  "🎂 Happy Birthday!",
+  "🌈 Shine Bright!",
+];
 
-// Game start
-document.getElementById('startBtn').onclick = () => {
-  document.querySelector('.intro-screen').style.display = 'none';
-  document.querySelector('.game-screen').style.display = 'block';
-};
+let angle = 0;
+let isSpinning = false;
 
-// Spin wheel logic
-const canvas = document.getElementById('wheelCanvas');
-const ctx = canvas.getContext('2d');
-const spinBtn = document.getElementById('spinBtn');
-const resultText = document.getElementById('resultText');
+function spinWheel() {
+  if (isSpinning) return;
+  isSpinning = true;
 
-const rewards = ['₹3000', 'Better luck next time', '₹1000', '₹500', 'Try again', '₹3000'];
-const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
+  const wheel = document.getElementById("wheel");
+  const result = document.getElementById("result");
 
-function drawWheel() {
-  const arcSize = (2 * Math.PI) / rewards.length;
-  rewards.forEach((reward, i) => {
-    const angle = i * arcSize;
-    ctx.beginPath();
-    ctx.fillStyle = colors[i];
-    ctx.moveTo(200, 200);
-    ctx.arc(200, 200, 180, angle, angle + arcSize);
-    ctx.lineTo(200, 200);
-    ctx.fill();
-    ctx.fillStyle = '#000';
-    ctx.font = '16px Arial';
-    ctx.fillText(reward, 200 + 100 * Math.cos(angle + arcSize / 2), 200 + 100 * Math.sin(angle + arcSize / 2));
-  });
+  const randomIndex = Math.floor(Math.random() * segments.length);
+  const spinDegrees = 360 * 5 + (360 / segments.length) * randomIndex;
+
+  angle += spinDegrees;
+  wheel.style.transition = "transform 4s ease-out";
+  wheel.style.transform = `rotate(${angle}deg)`;
+
+  setTimeout(() => {
+    result.textContent = segments[randomIndex];
+    isSpinning = false;
+
+    // Confetti
+    for (let i = 0; i < 30; i++) {
+      createConfetti();
+    }
+
+    // Play music
+    document.getElementById("birthday-audio").play();
+  }, 4000);
 }
 
-drawWheel();
+function createConfetti() {
+  const confetti = document.createElement("div");
+  confetti.className = "confetti";
+  confetti.style.position = "fixed";
+  confetti.style.width = "10px";
+  confetti.style.height = "10px";
+  confetti.style.backgroundColor = getRandomColor();
+  confetti.style.top = "0";
+  confetti.style.left = Math.random() * window.innerWidth + "px";
+  confetti.style.opacity = 0.8;
+  confetti.style.zIndex = 9999;
+  document.body.appendChild(confetti);
 
-spinBtn.onclick = () => {
-  spinBtn.disabled = true;
-  let angle = 0;
-  const spin = setInterval(() => {
-    canvas.style.transform = `rotate(${angle}deg)`;
-    angle += 20;
-  }, 20);
-  
+  const fallTime = Math.random() * 3 + 2;
+  confetti.animate(
+    [
+      { transform: "translateY(0)" },
+      { transform: `translateY(${window.innerHeight}px)` },
+    ],
+    {
+      duration: fallTime * 1000,
+      iterations: 1,
+    }
+  );
+
   setTimeout(() => {
-    clearInterval(spin);
-    const result = rewards[Math.floor(Math.random() * rewards.length)];
-    resultText.innerText = `🎁 You won: ${result}`;
-    spinBtn.disabled = false;
-  }, 3000);
-};
+    confetti.remove();
+  }, fallTime * 1000);
+}
+
+function getRandomColor() {
+  const colors = ["#ff69b4", "#ffd700", "#00ffff", "#ff7f50", "#adff2f"];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
