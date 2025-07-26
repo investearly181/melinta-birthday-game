@@ -1,42 +1,71 @@
+/* style.css */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #f8b500, #fceabb);
-  text-align: center;
-  padding: 20px;
   margin: 0;
+  padding: 0;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: linear-gradient(to right, #ffccff, #ccffff);
+  text-align: center;
+  overflow: hidden;
 }
 
-h1, h2 {
-  color: #ffffff;
-  text-shadow: 2px 2px 4px #000;
+h1 {
+  margin-top: 20px;
+  color: #ff69b4;
+  animation: bounce 2s infinite;
 }
 
-.intro-screen, .game-screen {
-  padding: 20px;
-  border-radius: 10px;
-}
-
-button {
-  padding: 12px 25px;
-  font-size: 18px;
-  background: #ff4081;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 15px;
-}
-
-.slideshow img {
+#wheel {
   width: 300px;
-  height: 200px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.4);
-  animation: fade 3s ease-in-out infinite;
+  height: 300px;
+  margin: 40px auto;
+  border: 10px solid #ff69b4;
+  border-radius: 50%;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 0 20px #ff69b4;
 }
 
-@keyframes fade {
-  0% {opacity: 0;}
-  50% {opacity: 1;}
-  100% {opacity: 0;}
+.segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0% 0%;
+  background-color: #ffd700;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  text-align: left;
+  padding: 10px;
+  box-sizing: border-box;
+  font-weight: bold;
+  color: #000;
+}
+
+#spinBtn {
+  padding: 15px 30px;
+  font-size: 20px;
+  background-color: #ff69b4;
+  border: none;
+  color: white;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#result {
+  font-size: 24px;
+  margin-top: 20px;
+  color: #ff1493;
+  font-weight: bold;
+  animation: popUp 1s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes popUp {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
