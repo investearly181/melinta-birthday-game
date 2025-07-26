@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin to Win - Melinta's Birthday 🎉</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <audio autoplay loop>
+    <source src="audio/happy_birthday.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="intro">
+    <h1>💌 Happy Birthday Melinta!</h1>
+    <p>I said don’t expect anything less from your brother 💖</p>
+    <p>Play the game and win your surprise 🎁</p>
+    <img src="images/melinta_and_brother.jpg" alt="Melinta and Brother" />
+    <button id="startBtn">Start the Game 🎂</button>
+  </div>
+
+  <div class="game-container hidden">
+    <div class="wheel-container">
+      <canvas id="wheel" width="500" height="500"></canvas>
+      <button id="spinBtn">🎉 Spin the Wheel 🎉</button>
+    </div>
+    <div id="result" class="result-message"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

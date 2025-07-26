@@ -1,0 +1,44 @@
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff8f0;
+  text-align: center;
+  padding: 20px;
+}
+
+.intro {
+  margin-top: 30px;
+}
+
+.intro img {
+  width: 200px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+#wheel {
+  border-radius: 50%;
+  margin-top: 20px;
+  border: 10px solid #ffcccb;
+}
+
+#spinBtn, #startBtn {
+  margin-top: 20px;
+  font-size: 1.2em;
+  padding: 10px 25px;
+  background-color: #ff69b4;
+  border: none;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.result-message {
+  font-size: 1.5em;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
